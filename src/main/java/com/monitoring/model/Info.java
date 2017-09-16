@@ -9,6 +9,7 @@ public class Info {
     private NetInfo netInfo;
     private long rps;
     private long time;
+    private int ip;
 
     @JsonCreator
     public Info(@JsonProperty("cpu") CPUInfo cpuInfo,
@@ -23,6 +24,19 @@ public class Info {
         this.time = time;
     }
 
+    public Info(CPUInfo cpuInfo,
+                MemInfo memInfo,
+                NetInfo netInfo,
+                long rps,
+                long time,
+                int ip) {
+        this.cpuInfo = cpuInfo;
+        this.memInfo = memInfo;
+        this.netInfo = netInfo;
+        this.rps = rps;
+        this.time = time;
+        this.ip = ip;
+    }
 
 
     public CPUInfo getCpuInfo() {
@@ -45,7 +59,11 @@ public class Info {
         return rps;
     }
 
+    public int getIp() {
+        return ip;
+    }
+
     public String toString(){
-        return "{"+cpuInfo.toString()+","+memInfo.toString()+","+netInfo.toString() + ", rps : " + rps + " , time :" + time + "}";
+        return "{\"ip\" : " + ip +", " +cpuInfo.toString()+","+memInfo.toString()+","+netInfo.toString() + ", rps : " + rps + " , time :" + time + "}";
     }
 }

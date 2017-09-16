@@ -70,7 +70,8 @@ public class InfoBd {
                             "`net_receive`, " +
                             "`net_transmit`, " +
                             "`time`, " +
-                            "`rps` " +
+                            "`rps`," +
+                            "`ip` " +
                      "FROM `Info` " +
                      "ORDER BY `time` DESC " +
                      "LIMIT " + limit +";" ;
@@ -96,11 +97,12 @@ public class InfoBd {
                     new MemInfo(rs.getLong("mem_free"), rs.getLong("mem_total")),
                     new NetInfo(rs.getLong("net_receive"), rs.getLong("net_transmit")),
                     rs.getLong("rps"),
-                    rs.getLong("time")
+                    rs.getLong("time"),
+                    rs.getInt("ip")
             );
 
     final RowMapper<NameInfo> NAME_MAPPER = (rs, rowNum)->
-            new NameInfo(rs.getInt("ip"),rs.getNString("name"));
+            new NameInfo(rs.getInt("ip"),rs.getString("name"));
 }
 
 

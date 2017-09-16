@@ -6,93 +6,40 @@
         <script type="text/javascript">
             window.alert = function(msg){return false}
         </script>
+        <!-- Load c3.css -->
+        <link href="https://unpkg.com/c3@v0.4.18/c3.css" rel="stylesheet">
+        <link href="/draw.css" rel="stylesheet">
+        <!-- Load d3.js and c3.js -->
+        <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
+        <script src="https://unpkg.com/c3@0.4.18/c3.js"></script>
+
     </head>
     <body>
-        <canvas id="canvas_cpu" width="600" height="400">
-            Мой охренительно классный Canvas не работает... И все из-за тебя %browser% (IE)!
-        </canvas>
-
-        <canvas id="canvas_mem" width="600" height="400">
-            Мой охренительно классный Canvas не работает... И все из-за тебя %browser% (IE)!
-        </canvas>
-
-        <canvas id="canvas_receive" width="600" height="400">
-            Мой охренительно классный Canvas не работает... И все из-за тебя %browser% (IE)!
-        </canvas>
-
-        <canvas id="canvas_transmit" width="600" height="400">
-            Мой охренительно классный Canvas не работает... И все из-за тебя %browser% (IE)!
-        </canvas>
-
-        <canvas id="canvas_rps" width="600" height="400">
-            Мой охренительно классный Canvas не работает... И все из-за тебя %browser% (IE)!
-        </canvas>
-
-        <script type="text/javascript">
-            function rand(min,max) {
-                var argc = arguments.length;
-                if (argc === 0) {
-                    min = 0;
-                    max = 2147483647;
-                } else if (argc === 1) {
-                    throw new Error('Warning: rand() expects exactly 2 parameters, 1 given');
-                }
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-            // Функция rand с phpjs :http://phpjs.org/functions/rand:498
-            // Потом понадобится.
-            var canvas, ctx; // Канвас и контекст для него,
-            // Короче там где рисовать будем.
-            var w, h; // Размер канваса, Ширина и Высота блока.
-            function load() {
-                canvas = document.getElementById("canvas_cpu");
-                w = canvas.clientWidth;
-                h = canvas.clientHeight;
-                ctx = canvas.getContext("2d");
-                // Рисуем черный квадрат, для заднего фона!
-                ctx.fillStyle = "#ffffff";
-                ctx.fillRect(0,0,w,h);
-                ctx.strokeStyle = "#aaaaaa";
-                for (var i = 1; i <= 20; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(i*(w/20),0);
-                    ctx.lineTo(i*(w/20),h);
-                    ctx.stroke();
-                }
-                for (var i = 1; i <= 20; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(0,i*(h/20));
-                    ctx.lineTo(w,i*(h/20));
-                    ctx.stroke();
-                }
-                ctx.strokeStyle = "#00ff00";
-                ctx.beginPath();
-                ctx.moveTo(0,h/2);
-                for (var i = 1; i <= 20; i++) {
-                    ctx.lineTo(i*(w/20),rand(0,h));
-                }
-                ctx.stroke();
-                ctx.strokeStyle = "#0000ff";
-                ctx.beginPath();
-                ctx.moveTo(0,h/2);
-                for (var i = 1; i <= 20; i++) {
-                    ctx.lineTo(i*(w/20),rand(0,h));
-                }
-                ctx.stroke();
-                ctx.strokeStyle = "#ff0000";
-                ctx.beginPath();
-                ctx.moveTo(0,h/2);
-                for (var i = 1; i <= 20; i++) {
-                    ctx.lineTo(i*(w/20),rand(0,h));
-                }
-                ctx.stroke();
-            }
-            window.addEventListener("DOMContentLoaded",load);
-
-            setTimeout(function () {
-                location.reload();
-            }, 10*1000);
-        </script>
+    <div>
+        <div class="container" style="width: 25%">
+            <h1 class="title">CPU</h1>
+            <div id="chart_cpu" class="c3"></div>
+        </div>
+        <div class="container" style="width: 25%">
+            <h1 class="title">Mem</h1>
+            <div id="chart_mem" class="c3"></div>
+        </div>
+        <div class="container" style="width: 50%">
+            <h1 class="title">Rps</h1>
+            <div id="chart_rpc"></div>
+        </div>
+    </div>
+    <div>
+        <div class="container" style="width: 50%">
+            <h1 class="title">Receive</h1>
+            <div id="chart_receive"></div>
+        </div>
+        <div class="container" style="width: 50%">
+            <h1 class="title">Transmit</h1>
+            <div id="chart_transmit"></div>
+        </div>
+    </div>
+        <script src="/draw.js"></script>
     </body>
 </html>
 
