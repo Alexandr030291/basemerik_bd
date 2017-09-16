@@ -1,6 +1,42 @@
 /**
  * Created by alexandr on 16.09.17.
  */
+
+(function () {
+    let sizeToString = function (bytes) {
+        // One way to write it, not the prettiest way to write it.
+
+        let fmt = d3.format('.0f');
+        if (bytes < 1000) {
+            return fmt(bytes) + '1/s';
+        } else if (bytes < 1000 * 1000) {
+            return fmt(bytes / 1000) + 'k/s';
+        } else if (bytes < 1000 * 1000 * 1000) {
+            return fmt(bytes / 1000 / 1000) + 'M/s';
+        } else {
+            return fmt(bytes / 1000 / 1000 / 1000) + 'G/s';
+        }
+    };
+
+
+    let bytesToString = function (bytes) {
+        // One way to write it, not the prettiest way to write it.
+
+        let fmt = d3.format('.0f');
+        if (bytes < 1024) {
+            return fmt(bytes) + 'B/s';
+        } else if (bytes < 1024 * 1024) {
+            return fmt(bytes / 1024) + 'kB/s';
+        } else if (bytes < 1024 * 1024 * 1024) {
+            return fmt(bytes / 1024 / 1024) + 'MB/s';
+        } else {
+            return fmt(bytes / 1024 / 1024 / 1024) + 'GB/s';
+        }
+    };
+    window.bytesToString=bytesToString;
+    window.sizeToString=sizeToString;
+})();
+
 (function () {
    // console.log("Update 2");
     let xhr = new XMLHttpRequest();
@@ -61,7 +97,7 @@
         console.log('Ошибка ' + xhr.status + ': ' + xhr.statusText);
     } else {
         len_info_one_ip =JSON.parse(xhr.responseText);
-        console.log(len_info_one_ip);
+    //    console.log(len_info_one_ip);
     }
 
     let len_info = len_info_one_ip * name_ip.length;
@@ -76,8 +112,8 @@
         infos = JSON.parse(xhr.responseText);
         for (let i=0; i<infos.length; i++) {
             map_info_time.get(infos[i].ip).push(new Date(infos[i].time*1000));
-            map_info_cpu.get(infos[i].ip).push(100*infos[i].cpuInfo.busy/infos[i].cpuInfo.work);
-            map_info_mem.get(infos[i].ip).push(100-100*infos[i].memInfo.free/infos[i].memInfo.total);
+            map_info_cpu.get(infos[i].ip).push(infos[i].cpuInfo.busy/infos[i].cpuInfo.work);
+            map_info_mem.get(infos[i].ip).push(1-infos[i].memInfo.free/infos[i].memInfo.total);
             map_info_rps.get(infos[i].ip).push(infos[i].rps);
             map_info_receive.get(infos[i].ip).push(-infos[i].netInfo.receive);
             map_info_transmit.get(infos[i].ip).push(infos[i].netInfo.transmit);
@@ -109,9 +145,9 @@
 
     }
 
-    console.log(axes);
+ //   console.log(axes);
 
-    console.log(infos[0]);
+ //   console.log(infos[0]);
 
     let axes_x ={
         label: '',
@@ -142,10 +178,10 @@
         axis: {
             x: axes_x,
             y: {
-                max: 90,
-                min: 10,
-                // Range includes padding, set 0 if no padding needed
-                // padding: {top:0, bottom:0}
+                tick: {
+                    format: d3.format("%")
+                },
+                max: 0.9,
             }
         },
         point: {
@@ -170,10 +206,10 @@
         axis: {
             x: axes_x,
             y: {
-                max: 90,
-                min: 10,
-                // Range includes padding, set 0 if no padding needed
-                // padding: {top:0, bottom:0}
+                tick: {
+                    format: d3.format("%")
+                },
+                max: 0.9,
             }
         },
         point: {
@@ -196,7 +232,12 @@
             }
         },
         axis: {
-            x: axes_x
+            x: axes_x,
+            y: {
+                tick: {
+                    format: sizeToString,
+                }
+            }
         },
         point: {
             show: false
@@ -218,7 +259,12 @@
             }
         },
         axis: {
-            x: axes_x
+            x: axes_x,
+            y: {
+                tick: {
+                    format: bytesToString
+                }
+            }
         },
         point: {
             show: false
@@ -240,7 +286,12 @@
             }
         },
         axis: {
-            x: axes_x
+            x: axes_x,
+            y: {
+                tick: {
+                    format: bytesToString
+                }
+            }
         },
         point: {
             show: false
