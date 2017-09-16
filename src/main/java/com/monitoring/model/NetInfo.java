@@ -21,9 +21,10 @@ public class NetInfo {
     public long gettransmit() {
         return transmit;
     }
-
+/*
     @Override
     public String toString(){
-        return "net:{bust:"+receive+",transmit:"+transmit+"}";
+        return "net:{receive:"+receive+",transmit:"+transmit+"}";
     }
+    */
 }

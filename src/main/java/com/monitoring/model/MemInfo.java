@@ -22,9 +22,10 @@ public class MemInfo {
     public long getTotal() {
         return total;
     }
-
+/*
     @Override
     public String toString(){
         return "mem:{free:"+free+",total:"+total+"}";
     }
+*/
 }

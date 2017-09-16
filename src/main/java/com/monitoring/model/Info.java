@@ -62,8 +62,8 @@ public class Info {
     public int getIp() {
         return ip;
     }
-
+/*
     public String toString(){
         return "{\"ip\" : " + ip +", " +cpuInfo.toString()+","+memInfo.toString()+","+netInfo.toString() + ", rps : " + rps + " , time :" + time + "}";
-    }
+    }*/
 }

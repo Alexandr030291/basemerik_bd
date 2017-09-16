@@ -22,9 +22,10 @@ public class CPUInfo {
     public long getWork() {
         return work;
     }
-
+/*
     @Override
     public String toString(){
         return "cpu:{bust:"+busy+",work:"+work+"}";
     }
+*/
 }
