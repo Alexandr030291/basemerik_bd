@@ -2,6 +2,7 @@ package com.monitoring.Controller;
 
 import com.monitoring.Service.InfoBd;
 import com.monitoring.model.Info;
+import com.monitoring.model.LenMetric;
 import com.monitoring.model.NameInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class EchoPort {
     private InfoBd infoBd;
+    private int len_metric;
 
     public EchoPort(InfoBd infoBd) {
         this.infoBd = infoBd;
+        this.len_metric = 600;
     }
 
     @RequestMapping(path = "db/api/info", method = RequestMethod.POST)
@@ -61,6 +64,17 @@ public class EchoPort {
     public ResponseEntity clear() {
         infoBd.allClear();
         return ResponseEntity.ok().body("[]");
+    }
+
+    @RequestMapping(path = "db/api/len", method = RequestMethod.POST)
+    public ResponseEntity setLen(@RequestBody LenMetric body) {
+        this.len_metric=body.getLen();
+        return ResponseEntity.ok().body("[]");
+    }
+
+    @RequestMapping(path = "db/api/len", method = RequestMethod.GET)
+    public ResponseEntity getLen() {
+        return ResponseEntity.ok().body(this.len_metric);
     }
 
 }

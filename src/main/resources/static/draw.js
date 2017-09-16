@@ -53,7 +53,17 @@
   //  console.log(map_name);
   //  console.log(map_info_cpu);
 
-    const len_info_one_ip = 60;
+    let len_info_one_ip = 60;
+    xhr.open('GET', 'db/api/len', false);
+    xhr.send();
+    if (xhr.status != 200) {
+        // обработать ошибку
+        console.log('Ошибка ' + xhr.status + ': ' + xhr.statusText);
+    } else {
+        len_info_one_ip =JSON.parse(xhr.responseText);
+        console.log(len_info_one_ip);
+    }
+
     let len_info = len_info_one_ip * name_ip.length;
     xhr.open('GET', 'db/api/info?len='+len_info, false);
     xhr.send();
@@ -64,7 +74,7 @@
     } else {
         // вывести результат
         infos = JSON.parse(xhr.responseText);
-        for (let i=infos.length-1; i>0; i--) {
+        for (let i=0; i<infos.length; i++) {
             map_info_time.get(infos[i].ip).push(new Date(infos[i].time*1000));
             map_info_cpu.get(infos[i].ip).push(100*infos[i].cpuInfo.busy/infos[i].cpuInfo.work);
             map_info_mem.get(infos[i].ip).push(100-100*infos[i].memInfo.free/infos[i].memInfo.total);
@@ -110,7 +120,8 @@
             rotate: 90,
             count: 11,
             format: '%H:%M:%S'
-        }
+        },
+        fontsize: 18
     };
 
     let chart_cpu = c3.generate({
@@ -120,6 +131,14 @@
             columns: columns_cpu,
             types: types
         },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
         axis: {
             x: axes_x,
             y: {
@@ -128,6 +147,9 @@
                 // Range includes padding, set 0 if no padding needed
                 // padding: {top:0, bottom:0}
             }
+        },
+        point: {
+            show: false
         }
     });
     let chart_mem = c3.generate({
@@ -137,6 +159,14 @@
             columns: columns_mem,
             types: types
         },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
         axis: {
             x: axes_x,
             y: {
@@ -145,6 +175,9 @@
                 // Range includes padding, set 0 if no padding needed
                 // padding: {top:0, bottom:0}
             }
+        },
+        point: {
+            show: false
         }
     });
     let chart_rpc = c3.generate({
@@ -154,8 +187,19 @@
             columns: columns_rps,
             types: types
         },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
         axis: {
             x: axes_x
+        },
+        point: {
+            show: false
         }
     });
     let chart_receive = c3.generate({
@@ -165,8 +209,19 @@
             columns: columns_receive,
             types: types
         },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
         axis: {
             x: axes_x
+        },
+        point: {
+            show: false
         }
     });
     let chart_transmit = c3.generate({
@@ -176,8 +231,19 @@
             columns: columns_transmit,
             types: types
         },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
         axis: {
             x: axes_x
+        },
+        point: {
+            show: false
         }
     });
 })();
