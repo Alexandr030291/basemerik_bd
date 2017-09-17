@@ -8,13 +8,13 @@
 
         let fmt = d3.format('.0f');
         if (bytes < 1000) {
-            return fmt(bytes) + '1/s';
+            return fmt(bytes) + 'Rps';
         } else if (bytes < 1000 * 1000) {
-            return fmt(bytes / 1000) + 'k/s';
+            return fmt(bytes / 1000) + 'kRps';
         } else if (bytes < 1000 * 1000 * 1000) {
-            return fmt(bytes / 1000 / 1000) + 'M/s';
+            return fmt(bytes / 1000 / 1000) + 'MR/s';
         } else {
-            return fmt(bytes / 1000 / 1000 / 1000) + 'G/s';
+            return fmt(bytes / 1000 / 1000 / 1000) + 'GRps';
         }
     };
 
@@ -114,9 +114,9 @@
             map_info_time.get(infos[i].ip).push(new Date(infos[i].time*1000));
             map_info_cpu.get(infos[i].ip).push(infos[i].cpuInfo.busy/infos[i].cpuInfo.work);
             map_info_mem.get(infos[i].ip).push(1-infos[i].memInfo.free/infos[i].memInfo.total);
-            map_info_rps.get(infos[i].ip).push(infos[i].rps);
-            map_info_receive.get(infos[i].ip).push(-infos[i].netInfo.receive);
-            map_info_transmit.get(infos[i].ip).push(infos[i].netInfo.transmit);
+            map_info_rps.get(infos[i].ip).push(infos[i].rps/5);
+            map_info_receive.get(infos[i].ip).push(-infos[i].netInfo.receive/5);
+            map_info_transmit.get(infos[i].ip).push(infos[i].netInfo.transmit/5);
         }
     }
 
